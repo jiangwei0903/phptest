@@ -11,11 +11,8 @@ class PostsModel extends Model{
 
     protected $primaryKey = 'id';
 
-    public function hasManyPosts(){
-        return $this->hasMany('App\DzinfoModel','postsid','id');
-    }
-
     public function user(){
         return $this->belongsToMany(UserModel::class, 'dzinfo', 'postsid', 'userid');
     }
+
 }

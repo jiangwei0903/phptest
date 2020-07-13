@@ -37,7 +37,7 @@ Route::post('posts/addPosts/{titel}/{content}/{creatorId}', 'PostsController@add
 Route::put('posts/updPosts/{id}/{titel}/{content}', 'PostsController@updPosts');
 
 //删除帖子信息
-Route::delete('posts/delPosts/{id}', 'PostsController@delPosts');
+Route::get('posts/delPosts/{id}', 'PostsController@delPosts');
 
 //根据用户id获取用户所发布的贴子
 Route::get('user/getUserPosts/{id}', 'UserController@getUserPosts');
@@ -47,3 +47,18 @@ Route::post('posts/addDzinfo/{postsid}/{userid}', 'PostsController@addDzinfo');
 
 //获取帖子点赞人列表
 Route::get('posts/getDzinfo/{postsid}', 'PostsController@getDzinfo');
+
+//获取帖子评论列表
+Route::get('reviews/getReviews/{postsid}', 'ReviewsController@getReviews');
+
+//新增帖子评论
+Route::get('reviews/addReviews/{postsid}/{userid}/{content}', 'ReviewsController@addReviews');
+
+//审核评论
+Route::get('reviews/checkReviews/{id}/{flage}', 'ReviewsController@checkReviews');
+
+//获取评论数
+Route::get('reviews/getCouReviews/{postsid}', 'ReviewsController@getCouReviews');
+
+//根据部门查下评论信息
+Route::get('dep/getRevinfo/{depid}', 'DepController@getRevinfo');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DzinfoModel;
 use App\PostsModel;
+use App\ReviewsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -59,9 +60,16 @@ class PostsController extends Controller{
     //删除帖子信息
     public function delPosts($id){
 
-        $ret = PostsModel::where('id', $id)->delete();
+        //删除点赞信息
+        $delDzinfo = DzinfoModel::where('postsid', $id)->delete();
 
         $message = '删除失败';
+
+        //删除评论
+        $delreviews = ReviewsModel::where('postsid', $id)->delete();
+
+        //删除文章
+        $ret = PostsModel::where('id', $id)->delete();
 
         if($ret){
             $message = '删除成功';
@@ -97,6 +105,7 @@ class PostsController extends Controller{
         return $message;
     }
 
+    //获取点赞信息
     public function getDzinfo($postsid){
 
         $post = PostsModel::findOrFail($postsid);

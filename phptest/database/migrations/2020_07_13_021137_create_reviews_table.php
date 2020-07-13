@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTable extends Migration
+class CreateReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('user', function (Blueprint $table) {
-            //自增id
+        Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',20)->default("");
-            $table->string('sex',5)->default("");
-            $table->integer('age')->default(18);
-            $table->integer('depid')->default(1);
+            $table->integer('postsid')->default(0);
+            $table->integer('userid')->default(0);
+            $table->string('content',2000)->default("");
+            $table->integer('checkflage')->default(0);
 
             //timestamps函数会自动加入 created_at 和 updated_at字段
             $table->timestamps();
@@ -33,6 +32,6 @@ class CreateUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('reviews');
     }
 }
