@@ -7,11 +7,10 @@ use App\ReviewsModel;
 class ReviewsController extends Controller
 {
 
-    //获取帖子评论列表
+    //通过查询作用域获取帖子评论列表
     public function getReviews($postsid){
 
-        $reviews = ReviewsModel::where('postsid', $postsid)
-            ->where('checkflage', 1)
+        $reviews = ReviewsModel::checkflage()->reviewspostsid($postsid)
             ->orderBy('id')
             ->get();
 
@@ -56,9 +55,11 @@ class ReviewsController extends Controller
     //获取评论数
     public function getCouReviews($postsid){
 
-//        $cou = ReviewsModel::where('postsid', $postsid)->count();
+        $reviews = new ReviewsModel();
+        $reviews->reviews_cou = $postsid;
 
-        $cou = count((new ReviewsModel())->getReviews($postsid));
+        $cou = $reviews['reviews_cou'];
+
         return $cou;
     }
 }

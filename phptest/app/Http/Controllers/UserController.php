@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\PostsModel;
 use App\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,8 +45,6 @@ class UserController extends Controller
         $userModel->name=$name;
         $userModel->sex=$sex;
         $userModel->age=$age;
-        $userModel->created_at=now();
-        $userModel->updated_at=now();
 
         $ret = $userModel->save();
 
@@ -101,9 +100,17 @@ class UserController extends Controller
         return $message;
     }
 
-    //根据用户id获取用户所发布的贴子
-    public function getUserPosts($id){
 
-        return dd((new UserModel())->getUserPosts($id));
+//    public function getUserPosts($id){
+//
+//        return dd((new UserModel())->getUserPosts($id));
+//    }
+
+    //根据用户id获取用户所发布的贴子
+    public function getPosts($userid){
+
+        $post = UserModel::findOrFail($userid);
+
+        return $post->showPosts;
     }
 }

@@ -14,7 +14,7 @@ class DepModel extends Model
 
     public function reviews(){
 
-        return $this->belongsToMany(ReviewsModel::class, 'user', 'depid', 'id', '', 'userid');
+        return $this->hasManyThrough(PostsModel::class, UserModel::class, 'depid', 'creatorId', 'id', 'id');
     }
 
 }

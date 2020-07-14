@@ -27,8 +27,6 @@ class PostsController extends Controller{
         $postsModel->titel=$titel;
         $postsModel->content=$content;
         $postsModel->creatorId=$creatorId;
-        $postsModel->created_at=now();
-        $postsModel->updated_at=now();
 
         $ret = $postsModel->save();
 
@@ -60,22 +58,13 @@ class PostsController extends Controller{
     //删除帖子信息
     public function delPosts($id){
 
-        //删除点赞信息
-        $delDzinfo = DzinfoModel::where('postsid', $id)->delete();
+        $post = PostsModel::findOrFail($id);
 
-        $message = '删除失败';
+        $post->getDz()->delete();
+        $post->getReviews()->delete();
+        $post->delete();
 
-        //删除评论
-        $delreviews = ReviewsModel::where('postsid', $id)->delete();
-
-        //删除文章
-        $ret = PostsModel::where('id', $id)->delete();
-
-        if($ret){
-            $message = '删除成功';
-        }
-
-        return $message;
+        return '删除成功';
     }
 
     //帖子点赞
@@ -92,8 +81,6 @@ class PostsController extends Controller{
             $dzinfoModel = new DzinfoModel();
             $dzinfoModel->postsid=$postsid;
             $dzinfoModel->userid=$userid;
-            $dzinfoModel->created_at=now();
-            $dzinfoModel->updated_at=now();
 
             $ret2 = $dzinfoModel->save();
 
